@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>K-Pop Flag Pop! 🌟</title>
+    <title>Flag Pop! 🌟</title>
     <style>
-        /* Variáveis de Cores - Estética K-Pop Kawaii */
+        /* Variáveis de Cores - Estética Kawaii */
         :root {
             --bg-color: #ffe4e1;
             --container-bg: #ffffff;
@@ -61,7 +61,7 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        h1, h2 { color: var(--primary); font-size: 1.8rem; text-shadow: 2px 2px 0px #ffeaa7; }
+        h1, h2 { color: var(--primary); font-size: 2rem; text-shadow: 2px 2px 0px #ffeaa7; }
         p { color: var(--text-main); font-size: 1.1rem; font-weight: bold; }
 
         .mascot { font-size: 5rem; filter: drop-shadow(0 5px 0px var(--accent)); animation: float 3s ease-in-out infinite; }
@@ -74,7 +74,7 @@
             background: var(--container-bg);
             border: 3px solid var(--text-main);
             color: var(--text-main);
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             padding: 12px 10px;
             border-radius: 20px;
@@ -87,9 +87,9 @@
         .btn-primary { background: var(--primary); color: white; border-color: var(--text-main); border-radius: 50px; padding: 15px 30px;}
         .btn-secondary { background: var(--secondary); color: white; border-radius: 50px; padding: 15px 30px;}
 
-        .game-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .game-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .badge { background: var(--accent); color: white; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 1rem; border: 2px solid var(--text-main); box-shadow: 0 3px 0 var(--text-main); }
-        .lives { font-size: 1.5rem; letter-spacing: 2px; }
+        .lives { font-size: 1.2rem; letter-spacing: 2px; }
 
         .flag-box {
             background: #f1f2f6;
@@ -113,8 +113,7 @@
         }
         .flag-img.pop { transform: scale(1.05); }
 
-        /* Novo Grid para 4 Opções */
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 10px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-top: 5px; }
         .btn-option { background: white; text-align: center; }
 
         .correct { background: var(--correct) !important; color: white !important; animation: popBounce 0.5s ease; border-color: #27ae60; box-shadow: 0 5px 0 #27ae60; }
@@ -123,7 +122,28 @@
         @keyframes popBounce { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
 
-        /* Animação do Emoji de Celebração a cada 5 acertos */
+        /* Barra de Prêmios Acumulados Limpa */
+        .prize-bar {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px 10px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 15px;
+            border: 2px dashed var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #prizes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 35px;
+            font-size: 1.7rem;
+            align-items: center;
+            justify-content: center;
+        }
+
         .celebration-emoji {
             position: fixed;
             top: 50%;
@@ -152,79 +172,100 @@
         <!-- Tela Inicial -->
         <div id="start-screen" class="screen active">
             <div class="mascot">👩🏻‍🎤✨</div>
-            <h1>K-Pop Flag Pop!</h1>
-            <p>Adivinhe as bandeiras e vire uma Idol!</p>
+            <h1>Flag Pop!</h1>
+            <p>Adivinhe os países e torne-se um pop star das bandeiras!</p>
             <button class="btn btn-primary" onclick="startGame()">JOGAR! 🚀</button>
         </div>
 
         <!-- Tela do Jogo -->
         <div id="quiz-screen" class="screen">
             <div class="game-header">
-                <div class="badge" id="level-display">Lvl 1/100</div>
-                <div class="lives" id="lives-display">❤️❤️❤️</div>
+                <div class="badge" id="level-display">Lvl 1/120</div>
+                <div class="lives" id="lives-display">❤️❤️❤️❤️❤️</div>
             </div>
-            <h2 style="font-size: 1.4rem;">De onde é essa bandeira?</h2>
+            
+            <h2 style="font-size: 1.3rem;">De onde é essa bandeira?</h2>
+            
             <div class="flag-box">
                 <img src="" id="flag-img" class="flag-img" alt="Bandeira do País">
             </div>
-            <!-- Agora com 4 opções -->
+            
             <div class="options-grid" id="options-container"></div>
+
+            <!-- Barra de Prêmios Limpa -->
+            <div class="prize-bar" id="prize-bar-container">
+                <div id="prizes-container"></div>
+            </div>
         </div>
 
         <!-- Tela de Game Over -->
         <div id="game-over-screen" class="screen">
             <div class="mascot" style="animation: none; transform: rotate(10deg);">😭💔</div>
             <h2 style="color: var(--wrong);">Poxa, acabaram as vidas!</h2>
-            <p>Mas idols nunca desistem! Tente novamente.</p>
+            <p>Mas não desista! Tente novamente.</p>
             <button class="btn btn-primary" onclick="restartGame()">REINICIAR 🔄</button>
         </div>
 
         <!-- Tela de Vitória -->
         <div id="win-screen" class="screen">
-            <div class="mascot">👑🇰🇷</div>
+            <div class="mascot">👑🌍</div>
             <h2 style="color: var(--correct);">DAEBAK! (대박!)</h2>
-            <p>Você completou tudo! É uma lenda K-Pop!</p>
+            <p>Você completou tudo! Você é uma verdadeira lenda das bandeiras!</p>
             <button class="btn btn-secondary" onclick="restartGame()">Jogar de Novo! 🌟</button>
         </div>
     </div>
 
     <script>
-        // Dados otimizados com siglas dos continentes (SA, NA, EU, AS, AF, OC)
-        const rawData = [
-            "br|Brasil|SA", "us|Estados Unidos|NA", "ca|Canadá|NA", "kr|Coreia do Sul|AS", "jp|Japão|AS", "ar|Argentina|SA", "ch|Suíça|EU", "it|Itália|EU", "fr|França|EU", "gb|Reino Unido|EU",
-            "de|Alemanha|EU", "es|Espanha|EU", "mx|México|NA", "pt|Portugal|EU", "au|Austrália|OC", "cn|China|AS", "eg|Egito|AF", "in|Índia|AS", "za|África do Sul|AF", "cl|Chile|SA",
-            "ru|Rússia|EU", "tr|Turquia|EU", "se|Suécia|EU", "no|Noruega|EU", "dk|Dinamarca|EU", "fi|Finlândia|EU", "nl|Holanda|EU", "be|Bélgica|EU", "at|Áustria|EU", "gr|Grécia|EU",
-            "pe|Peru|SA", "co|Colômbia|SA", "ve|Venezuela|SA", "uy|Uruguai|SA", "py|Paraguai|SA", "bo|Bolívia|SA", "ec|Equador|SA", "cr|Costa Rica|NA", "cu|Cuba|NA", "pa|Panamá|NA",
-            "nz|Nova Zelândia|OC", "ph|Filipinas|AS", "id|Indonésia|AS", "my|Malásia|AS", "th|Tailândia|AS", "vn|Vietnã|AS", "sg|Singapura|AS", "pk|Paquistão|AS", "bd|Bangladesh|AS", "lk|Sri Lanka|AS",
-            "ng|Nigéria|AF", "ke|Quênia|AF", "ma|Marrocos|AF", "dz|Argélia|AF", "gh|Gana|AF", "sn|Senegal|AF", "et|Etiópia|AF", "tz|Tanzânia|AF", "ug|Uganda|AF", "ci|Costa do Marfim|AF",
-            "ie|Irlanda|EU", "pl|Polônia|EU", "cz|Rep. Tcheca|EU", "hu|Hungria|EU", "ro|Romênia|EU", "bg|Bulgária|EU", "hr|Croácia|EU", "rs|Sérvia|EU", "sk|Eslováquia|EU", "si|Eslovênia|EU",
-            "sa|Arábia Saudita|AS", "ae|Emirados Árabes|AS", "il|Israel|AS", "ir|Irã|AS", "iq|Iraque|AS", "sy|Síria|AS", "jo|Jordânia|AS", "lb|Líbano|AS", "qa|Catar|AS", "kw|Kuwait|AS",
-            "jm|Jamaica|NA", "ht|Haiti|NA", "do|Rep. Dominicana|NA", "bs|Bahamas|NA", "tt|Trindade e Tobago|NA", "bb|Barbados|NA", "bz|Belize|NA", "sv|El Salvador|NA", "hn|Honduras|NA", "gt|Guatemala|NA",
-            "is|Islândia|EU", "lu|Luxemburgo|EU", "mc|Mônaco|EU", "ad|Andorra|EU", "sm|San Marino|EU", "li|Liechtenstein|EU", "mt|Malta|EU", "cy|Chipre|EU", "fj|Fiji|OC", "mv|Maldivas|AS"
+        // Divisão em 12 Pools (grupos) de 10 países cada.
+        const poolsData = [
+            ["br|Brasil|SA", "us|Estados Unidos|NA", "ca|Canadá|NA", "it|Itália|EU", "ar|Argentina|SA", "ch|Suíça|EU", "jp|Japão|AS", "kr|Coreia do Sul|AS", "pt|Portugal|EU", "cn|China|AS"],
+            ["fr|França|EU", "gb-eng|Inglaterra|EU", "cl|Chile|SA", "uy|Uruguai|SA", "tr|Turquia|EU", "in|Índia|AS", "de|Alemanha|EU", "mx|México|NA", "vn|Vietnã|AS", "es|Espanha|EU"],
+            ["au|Austrália|OC", "ru|Rússia|EU", "za|África do Sul|AF", "eg|Egito|AF", "pe|Peru|SA", "co|Colômbia|SA", "ve|Venezuela|SA", "nl|Holanda|EU", "be|Bélgica|EU", "se|Suécia|EU"],
+            ["no|Noruega|EU", "dk|Dinamarca|EU", "fi|Finlândia|EU", "at|Áustria|EU", "gr|Grécia|EU", "py|Paraguai|SA", "bo|Bolívia|SA", "ec|Equador|SA", "cr|Costa Rica|NA", "cu|Cuba|NA"],
+            ["pa|Panamá|NA", "nz|Nova Zelândia|OC", "ph|Filipinas|AS", "id|Indonésia|AS", "my|Malásia|AS", "th|Tailândia|AS", "sg|Singapura|AS", "pk|Paquistão|AS", "bd|Bangladesh|AS", "lk|Sri Lanka|AS"],
+            ["ng|Nigéria|AF", "ke|Quênia|AF", "ma|Marrocos|AF", "dz|Argélia|AF", "gh|Gana|AF", "sn|Senegal|AF", "et|Etiópia|AF", "tz|Tanzânia|AF", "ug|Uganda|AF", "ci|Costa do Marfim|AF"],
+            ["ie|Irlanda|EU", "pl|Polônia|EU", "cz|Rep. Tcheca|EU", "hu|Hungria|EU", "ro|Romênia|EU", "bg|Bulgária|EU", "hr|Croácia|EU", "rs|Sérvia|EU", "sk|Eslováquia|EU", "si|Eslovênia|EU"],
+            ["gb-sct|Escócia|EU", "gb-wls|País de Gales|EU", "sa|Arábia Saudita|AS", "ae|Emirados Árabes|AS", "il|Israel|AS", "ir|Irã|AS", "iq|Iraque|AS", "sy|Síria|AS", "jo|Jordânia|AS", "lb|Líbano|AS"],
+            ["qa|Catar|AS", "kw|Kuwait|AS", "jm|Jamaica|NA", "ht|Haiti|NA", "do|Rep. Dominicana|NA", "bs|Bahamas|NA", "tt|Trindade e Tobago|NA", "bb|Barbados|NA", "bz|Belize|NA", "sv|El Salvador|NA"],
+            ["hn|Honduras|NA", "gt|Guatemala|NA", "is|Islândia|EU", "lu|Luxemburgo|EU", "mc|Mônaco|EU", "ad|Andorra|EU", "sm|San Marino|EU", "li|Liechtenstein|EU", "mt|Malta|EU", "cy|Chipre|EU"],
+            ["fj|Fiji|OC", "mv|Maldivas|AS", "np|Nepal|AS", "bt|Butão|AS", "bn|Brunei|AS", "kh|Camboja|AS", "la|Laos|AS", "mn|Mongólia|AS", "mm|Mianmar|AS", "af|Afeganistão|AS"],
+            ["uz|Uzbequistão|AS", "kz|Cazaquistão|AS", "tm|Turcomenistão|AS", "kg|Quirguistão|AS", "tj|Tajiquistão|AS", "am|Armênia|AS", "az|Azerbaijão|AS", "ge|Geórgia|AS", "md|Moldávia|EU", "ba|Bósnia e Herzegovina|EU"]
         ];
-        
-        // Mapeando a base de dados
-        const countries = rawData.map(d => {
-            const parts = d.split('|');
-            return { code: parts[0], name: parts[1], continent: parts[2] };
-        });
 
         const celebrationEmojis = ['🌟', '🎉', '✨', '💖', '🎊', '🎈', '🌸', '🎀', '🎵', '🦄', '🍭', '🍬', '🍰', '🌈', '🏆', '👑', '🥳', '🤩', '🫰', '🔥'];
+        const textNumbers = ["Um", "Dois", "Três", "Quatro"];
 
+        let gameSequence = []; 
         let currentLevel = 0;
-        let lives = 3;
+        let lives = 5;
         let isAnimating = false;
+        let accumulatedPrizes = [];
 
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
         }
 
+        function generateSequence() {
+            gameSequence = [];
+            poolsData.forEach((pool, index) => {
+                let parsedPool = pool.map(d => {
+                    const parts = d.split('|');
+                    return { code: parts[0], name: parts[1], continent: parts[2], poolIndex: index };
+                });
+                parsedPool.sort(() => Math.random() - 0.5);
+                gameSequence.push(...parsedPool);
+            });
+        }
+
         function startGame() {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             document.getElementById("confetti-canvas").style.display = "none";
+            generateSequence();
             currentLevel = 0;
-            lives = 3;
+            lives = 5;
+            accumulatedPrizes = [];
+            renderPrizes();
             updateLivesDisplay();
             switchScreen('quiz-screen');
             loadLevel();
@@ -236,24 +277,32 @@
 
         function updateLivesDisplay() {
             let hearts = '';
-            for(let i=0; i<3; i++) hearts += i < lives ? '❤️' : '💔';
+            for(let i=0; i<5; i++) hearts += i < lives ? '❤️' : '💔';
             document.getElementById('lives-display').innerText = hearts;
+        }
+
+        function renderPrizes() {
+            document.getElementById('prizes-container').innerText = accumulatedPrizes.join(' ');
         }
 
         function showCelebration() {
             const emoji = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+            
             const el = document.createElement('div');
             el.className = 'celebration-emoji';
             el.innerText = emoji;
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 2000);
+
+            accumulatedPrizes.push(emoji);
+            renderPrizes();
         }
 
         function loadLevel() {
             isAnimating = false;
-            document.getElementById("level-display").innerText = `Lvl ${currentLevel + 1}/100`;
+            document.getElementById("level-display").innerText = `Lvl ${currentLevel + 1}/${gameSequence.length}`;
 
-            const correctCountry = countries[currentLevel];
+            const correctCountry = gameSequence[currentLevel];
             const flagImg = document.getElementById("flag-img");
             flagImg.src = `https://flagcdn.com/w320/${correctCountry.code}.png`;
             
@@ -264,50 +313,47 @@
             const optionsContainer = document.getElementById("options-container");
             optionsContainer.innerHTML = "";
             
-            // Pool de países NUNCA exibidos como resposta certa
-            let unseenPool = countries.slice(currentLevel + 1);
+            let currentPoolIdx = Math.floor(currentLevel / 10);
+            let futureCountries = gameSequence.slice(currentLevel + 1);
+            let preferredWrongPool = futureCountries.filter(c => c.poolIndex <= currentPoolIdx + 2);
             let wrongOptions = [];
 
-            // 1. Tentar pegar 1 país do mesmo continente
-            let sameContinent = unseenPool.filter(c => c.continent === correctCountry.continent);
+            let sameContinent = preferredWrongPool.filter(c => c.continent === correctCountry.continent);
             if (sameContinent.length > 0) {
                 let picked = sameContinent[Math.floor(Math.random() * sameContinent.length)];
                 wrongOptions.push(picked);
             }
 
-            // 2. Preencher até ter 3 opções erradas respeitando a dificuldade
-            let difficultyLimit = Math.min(99, Math.floor(currentLevel / 10) * 10 + 19);
-            let preferredPool = unseenPool.filter(c => countries.indexOf(c) <= difficultyLimit && !wrongOptions.includes(c));
-
             while(wrongOptions.length < 3) {
-                let pool = preferredPool.length > 0 ? preferredPool : unseenPool.filter(c => !wrongOptions.includes(c));
-                if(pool.length === 0) break; // Acabou o pool de não vistos (ocorre no fim do jogo)
+                let pool = preferredWrongPool.filter(c => !wrongOptions.includes(c));
                 
+                if (pool.length === 0) {
+                    pool = futureCountries.filter(c => !wrongOptions.includes(c));
+                }
+                
+                if (pool.length === 0) {
+                    pool = gameSequence.slice(0, currentLevel).filter(c => !wrongOptions.includes(c));
+                }
+
                 let picked = pool[Math.floor(Math.random() * pool.length)];
                 wrongOptions.push(picked);
-                preferredPool = preferredPool.filter(c => c !== picked);
             }
 
-            // Fallback de segurança para os últimos 3 níveis do jogo
-            if(wrongOptions.length < 3) {
-                let usedPool = countries.slice(0, currentLevel).filter(c => !wrongOptions.includes(c));
-                while(wrongOptions.length < 3 && usedPool.length > 0) {
-                    let picked = usedPool[Math.floor(Math.random() * usedPool.length)];
-                    wrongOptions.push(picked);
-                    usedPool = usedPool.filter(c => c !== picked);
-                }
-            }
-
-            // Mistura 1 certa + 3 erradas
             const allOptions = [correctCountry, ...wrongOptions].sort(() => Math.random() - 0.5);
+            let speakSpeechText = "";
 
-            allOptions.forEach(opt => {
+            allOptions.forEach((opt, index) => {
+                const orderNum = index + 1;
                 const btn = document.createElement("button");
                 btn.className = "btn btn-option";
-                btn.innerText = opt.name;
+                btn.innerText = `${orderNum} - ${opt.name}`;
                 btn.onclick = () => handleAnswer(btn, opt.code === correctCountry.code, correctCountry.name);
                 optionsContainer.appendChild(btn);
+
+                speakSpeechText += `${textNumbers[index]} ${opt.name}. `;
             });
+
+            speakText(speakSpeechText);
         }
 
         function handleAnswer(btn, isCorrect, correctName) {
@@ -317,18 +363,16 @@
             if (isCorrect) {
                 btn.classList.add("correct");
                 playAudioTone(523.25, 659.25); 
-                speakCountryName(correctName);
+                speakText(correctName); 
 
                 let nextLevel = currentLevel + 1;
-                
-                // Se for multiplo de 5, comemora!
-                if (nextLevel % 5 === 0 && nextLevel < 100) {
+                if (nextLevel % 5 === 0 && nextLevel < gameSequence.length) {
                     showCelebration();
                 }
 
                 setTimeout(() => {
                     currentLevel++;
-                    if (currentLevel >= countries.length) {
+                    if (currentLevel >= gameSequence.length) {
                         switchScreen('win-screen');
                         fireConfetti();
                     } else {
@@ -351,12 +395,12 @@
             }
         }
 
-        function speakCountryName(text) {
+        function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const msg = new SpeechSynthesisUtterance(text);
                 msg.lang = 'pt-BR';
-                msg.rate = 1.1; 
+                msg.rate = 1.0; 
                 msg.pitch = 1.2; 
                 window.speechSynthesis.speak(msg);
             }
@@ -387,7 +431,6 @@
             }
         }
 
-        /* --- CONFETE COMPACTO --- */
         function fireConfetti() {
             const cvs = document.getElementById("confetti-canvas");
             cvs.style.display = "block";
